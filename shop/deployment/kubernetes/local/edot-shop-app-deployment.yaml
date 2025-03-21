@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edot-shop-app
+  labels:
+    app: edot-shop-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edot-shop-app
+  template:
+    metadata:
+      labels:
+        app: edot-shop-app
+    spec:
+      containers:
+        - name: edot-shop
+          image: edot-shop:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9000
+          env:
+            - name: DATABASE_URL
+              value: "postgres://user:password@edot-shop-postgres:5632/edot_shop_db?sslmode=disable"
+            - name: USER_REST_SERVICE_ADDRESS
+              value: "http://edot-user-app:9100"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edot-shop-app
+spec:
+  selector:
+    app: edot-shop-app
+  ports:
+    - protocol: TCP
+      port: 9200
+      targetPort: 9000
+      nodePort: 30200
+  type: NodePort

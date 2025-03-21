@@ -1,0 +1,52 @@
+services:
+  app:
+    build: .
+    ports:
+      - "9200:9000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      edot-network:
+        aliases:
+          - edot-shop-app
+    environment:
+      DATABASE_URL: "postgres://user:password@edot-shop-postgres:5432/edot_shop_db?sslmode=disable"
+      USER_REST_SERVICE_ADDRESS: "http://edot-user-app:9000"
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: edot_shop_db
+    ports:
+      - 5632:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    expose:
+      - 5632
+    volumes:
+      - edot-shop-db:/var/lib/postgresql/data
+    networks:
+      edot-network:
+        aliases:
+          - edot-shop-postgres
+  migrate:
+    image: migrate/migrate
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - edot-network
+    volumes:
+      - ./migration:/migration
+    command: ["-path", "/migration", "-database",  "postgres://user:password@edot-shop-postgres:5432/edot_shop_db?sslmode=disable", "up"]
+volumes:
+  edot-shop-db:
+    driver: local
+networks:
+  edot-network:
+    external: true

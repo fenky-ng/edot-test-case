@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: edot-user-postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edot-user-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edot-user-postgres
+  template:
+    metadata:
+      labels:
+        app: edot-user-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          env:
+            - name: POSTGRES_USER
+              value: "user"
+            - name: POSTGRES_PASSWORD
+              value: "password"
+            - name: POSTGRES_DB
+              value: "edot_user_db"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-storage
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: edot-user-postgres-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edot-user-postgres
+spec:
+  selector:
+    app: edot-user-postgres
+  ports:
+    - protocol: TCP
+      port: 5532
+      targetPort: 5432
+      nodePort: 30600
+  type: NodePort
