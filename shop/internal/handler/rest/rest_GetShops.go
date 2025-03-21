@@ -1,8 +1,10 @@
 package rest
 
 import (
+	"errors"
 	"strings"
 
+	in_err "github.com/fenky-ng/edot-test-case/shop/internal/error"
 	"github.com/fenky-ng/edot-test-case/shop/internal/model"
 	gin_res "github.com/fenky-ng/edot-test-case/shop/internal/utility/gin/response"
 	string_util "github.com/fenky-ng/edot-test-case/shop/internal/utility/string"
@@ -23,6 +25,7 @@ func (h *RestAPI) GetShops(c *gin.Context) {
 		strIds := strings.Split(paramIds, ",")
 		ids, err = string_util.ParseStringArrToUuidArr(strIds)
 		if err != nil {
+			err = errors.Join(in_err.ErrInvalidShopId, err)
 			gin_res.ReturnError(c, err)
 			return
 		}

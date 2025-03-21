@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	LocalDatabaseDSN = "postgres://user:password@localhost:5532/edot_user_db?sslmode=disable"
+	LocalDatabaseDSN = "postgres://user:password@localhost:5732/edot_warehouse_db?sslmode=disable"
 )
 
 func NewLocalDb() *sql.DB {
