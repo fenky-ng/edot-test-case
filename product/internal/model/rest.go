@@ -27,7 +27,7 @@ type RestAPIProduct struct {
 	Price       int64                  `json:"price"`
 	Status      constant.ProductStatus `json:"status"`
 	Shop        RestAPIShop            `json:"shop"`
-	Stock       RestAPIStock           `json:"stock"`
+	Stock       RestAPIProductStock    `json:"stock"`
 }
 
 type RestAPIShop struct {
@@ -36,15 +36,15 @@ type RestAPIShop struct {
 	Status constant.ShopStatus `json:"status"`
 }
 
-type RestAPIStock struct {
-	Total      int                       `json:"total"`
+type RestAPIProductStock struct {
+	Total      int64                     `json:"total"`
 	Warehouses []RestAPIProductWarehouse `json:"warehouses"`
 }
 
 type RestAPIProductWarehouse struct {
-	Id     uuid.UUID                    `json:"id"`
-	Stock  int                          `json:"stock"`
-	Status constant.ShopWarehouseStatus `json:"statu"`
+	WarehouseId     uuid.UUID                `json:"warehouseId"`
+	WarehouseStatus constant.WarehouseStatus `json:"warehouseStatus"`
+	Stock           int64                    `json:"stock"`
 }
 
 type RestAPIGetMyProductsResponse struct {

@@ -1,12 +1,12 @@
 package constant
 
-type ShopWarehouseStatus string
+type WarehouseStatus string
 
 const (
-	ShopWarehouseStatus_Active   = "ACTIVE"
-	ShopWarehouseStatus_Inactive = "INACTIVE"
+	WarehouseStatus_Active   WarehouseStatus = "ACTIVE"
+	WarehouseStatus_Inactive WarehouseStatus = "INACTIVE"
 )
 
-func (t ShopWarehouseStatus) String() string {
+func (t WarehouseStatus) String() string {
 	return string(t)
 }

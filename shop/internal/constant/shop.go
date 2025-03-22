@@ -4,7 +4,7 @@ type ShopStatus string
 
 const (
 	ShopStatus_Active  ShopStatus = "ACTIVE"
-	ShopStatus_Inctive ShopStatus = "INACTIVE"
+	ShopStatus_Inactive ShopStatus = "INACTIVE"
 )
 
 func (t ShopStatus) String() string {

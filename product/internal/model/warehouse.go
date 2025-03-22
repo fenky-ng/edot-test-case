@@ -5,33 +5,37 @@ import (
 	"github.com/google/uuid"
 )
 
-type ExtProductWarehouse struct {
-	ProductId   uuid.UUID
-	WarehouseId uuid.UUID
-	Stock       int
-	Status      constant.ShopWarehouseStatus
+type ExtProductStock struct {
+	ProductId  uuid.UUID
+	Warehouses []ExtProductWarehouse
 }
 
-type GetProductWarehousesInput struct {
+type ExtProductWarehouse struct {
+	WarehouseId     uuid.UUID
+	WarehouseStatus constant.WarehouseStatus
+	Stock           int64
+}
+
+type GetStocksInput struct {
 	ProductIds []uuid.UUID
 }
 
-type GetProductWarehousesOutput struct {
-	WarehousesByProductId map[uuid.UUID][]ExtProductWarehouse
+type GetStocksOutput struct {
+	Stocks []ExtProductStock
 }
 
-type HttpWarehouse struct {
-	ProductId   uuid.UUID
-	WarehouseId uuid.UUID
-	Stock       int
-	Status      constant.ShopWarehouseStatus
+type HttpProductStock struct {
+	ProductId  uuid.UUID              `json:"productId"`
+	Warehouses []HttpProductWarehouse `json:"warehouses"`
 }
 
-type HttpGetProductWarehousesResponse struct {
-	Error string                                             `json:"error"`
-	Data  map[uuid.UUID]HttpGetProductWarehousesResponseItem `json:"data"`
+type HttpProductWarehouse struct {
+	WarehouseId     uuid.UUID                `json:"warehouseId"`
+	WarehouseStatus constant.WarehouseStatus `json:"warehouseStatus"`
+	Stock           int64                    `json:"stock"`
 }
 
-type HttpGetProductWarehousesResponseItem struct {
-	Warehouses []HttpWarehouse `json:"warehouses"`
+type HttpGetStocksResponse struct {
+	Error string             `json:"error"`
+	Data  []HttpProductStock `json:"data"`
 }

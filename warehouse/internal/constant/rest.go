@@ -6,6 +6,7 @@ const (
 	HeaderAuth      = "Authorization"
 	AuthBearer      = "Bearer"
 
+	JwtKey    = "jwt"
 	UserIdKey = "userId"
 )
 
@@ -14,7 +15,7 @@ const (
 	UserGetProfileUri = "/api/v1/users/me"
 
 	// shop
-	// TODO
+	ShopGetMyShopUri = "/api/v1/shops/me"
 
 	// product
 	// TODO

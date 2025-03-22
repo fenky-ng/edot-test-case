@@ -39,7 +39,7 @@ func (h *RestAPI) GetMyProducts(c *gin.Context) {
 				Name:   product.Shop.Name,
 				Status: product.Shop.Status,
 			},
-			Stock: model.RestAPIStock{
+			Stock: model.RestAPIProductStock{
 				Total:      product.Stock.Total,
 				Warehouses: mapProductStockWarehouses(product.Stock.Warehouses),
 			},

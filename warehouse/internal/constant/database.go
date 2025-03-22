@@ -1,7 +1,7 @@
 package constant
 
 const (
-	DatabaseSchema        = "public"
-	TableShopWarehouse    = DatabaseSchema + "." + "shop_warehouse"
-	TableProductWarehouse = DatabaseSchema + "." + "product_warehouse"
+	DatabaseSchema = "public"
+	TableWarehouse = DatabaseSchema + "." + "warehouse"
+	TableStock     = DatabaseSchema + "." + "stock"
 )

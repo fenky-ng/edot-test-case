@@ -12,14 +12,14 @@ type Shop struct {
 }
 
 type Stock struct {
-	Total      int
+	Total      int64
 	Warehouses []ProductWarehouse
 }
 
 type ProductWarehouse struct {
-	Id     uuid.UUID
-	Stock  int
-	Status constant.ShopWarehouseStatus
+	WarehouseId     uuid.UUID
+	WarehouseStatus constant.WarehouseStatus
+	Stock           int64
 }
 
 type Product struct {

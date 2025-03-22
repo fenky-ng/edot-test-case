@@ -1,1 +1,60 @@
 # edot-test-case
+
+Apps:
+- edot-user-app
+    - address:
+        - Docker -> :9100
+        - Kubernetes -> :30100
+- edot-shop-app
+    - address:
+        - Docker -> :9200
+        - Kubernetes -> :30200
+- edot-product-app
+    - address:
+        - Docker -> :9300
+        - Kubernetes -> :30300
+- edot-warehouse-app
+    - address:
+        - Docker -> :9400
+        - Kubernetes -> :30400
+- edot-order-app
+    - address:
+        - Docker -> :9500
+        - Kubernetes -> :30500
+
+PostgreSQL:
+- user
+    - address:
+        - Docker -> :5532
+        - Kubernetes -> : 30600
+    - username: user
+    - password: password
+    - database: edot_user_db
+- shop
+    - address:
+        - Docker -> :5632
+        - Kubernetes -> : 30700
+    - username: user
+    - password: password
+    - database: edot_shop_db
+- product
+    - address:
+        - Docker -> :5732
+        - Kubernetes -> : 30800
+    - username: user
+    - password: password
+    - database: edot_product_db
+- warehouse
+    - address:
+        - Docker -> :5832
+        - Kubernetes -> : 30900
+    - username: user
+    - password: password
+    - database: edot_warehouse_db
+- order
+    - address:
+        - Docker -> :5932
+        - Kubernetes -> : 31000
+    - username: user
+    - password: password
+    - database: edot_order_db

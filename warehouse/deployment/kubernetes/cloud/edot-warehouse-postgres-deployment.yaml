@@ -38,7 +38,7 @@ spec:
                   name: edot-warehouse-secret
                   key: POSTGRES_PASSWORD
             - name: POSTGRES_DB
-              value: "edot_user_db"
+              value: "edot_warehouse_db"
           ports:
             - containerPort: 5432
           volumeMounts:

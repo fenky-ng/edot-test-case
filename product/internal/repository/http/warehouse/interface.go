@@ -7,5 +7,5 @@ import (
 )
 
 type RepoHttpWarehouseInterface interface {
-	GetProductWarehouses(ctx context.Context, input model.GetProductWarehousesInput) (output model.GetProductWarehousesOutput, err error)
+	GetStocks(ctx context.Context, input model.GetStocksInput) (output model.GetStocksOutput, err error)
 }

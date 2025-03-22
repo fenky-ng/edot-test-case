@@ -27,21 +27,21 @@ func (u *ProductUsecase) GetProductById(ctx context.Context, input model.GetProd
 	productOut.Product.Shop.Name = shop.Name
 	productOut.Product.Shop.Status = shop.Status
 
-	// product warehouses
-	warehousesByProductId, err := u.getProductWarehouses(ctx, []model.Product{
+	// stock
+	stocksByProductId, err := u.getStocks(ctx, []model.Product{
 		productOut.Product,
 	})
 	if err != nil {
 		return output, err
 	}
 
-	warehouses := warehousesByProductId[productOut.Product.Shop.Id]
-	for _, warehouse := range warehouses {
-		if warehouse.Status == constant.ShopWarehouseStatus_Inactive { // only show stock from active warehouse
+	stocks := stocksByProductId[productOut.Product.Id]
+	for _, stock := range stocks {
+		if stock.WarehouseStatus == constant.WarehouseStatus_Inactive { // only show stock from active warehouse
 			continue
 		}
-		productOut.Product.Stock.Total += warehouse.Stock
-		productOut.Product.Stock.Warehouses = append(productOut.Product.Stock.Warehouses, warehouse)
+		productOut.Product.Stock.Total += stock.Stock
+		productOut.Product.Stock.Warehouses = append(productOut.Product.Stock.Warehouses, stock)
 	}
 
 	output.Product = productOut.Product

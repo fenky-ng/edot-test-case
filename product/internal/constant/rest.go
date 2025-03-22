@@ -17,4 +17,7 @@ const (
 	// shop
 	ShopGetMyShopUri = "/api/v1/shops/me"
 	ShopGetShopsUri  = "/api/v1/shops"
+
+	// warehouse
+	WarehouseGetStocks = "/api/v1/warehouses/stocks"
 )

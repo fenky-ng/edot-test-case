@@ -8,9 +8,9 @@ func mapProductStockWarehouses(
 	out = make([]model.RestAPIProductWarehouse, 0)
 	for _, item := range in {
 		out = append(out, model.RestAPIProductWarehouse{
-			Id:     item.Id,
-			Stock:  item.Stock,
-			Status: item.Status,
+			WarehouseId:     item.WarehouseId,
+			WarehouseStatus: item.WarehouseStatus,
+			Stock:           item.Stock,
 		})
 	}
 	return out

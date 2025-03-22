@@ -20,6 +20,7 @@ var (
 	// system error
 	ErrGetMyShop     = errors.New("error occured when getting my shop")
 	ErrGetShops      = errors.New("error occured when getting shops")
+	ErrGetStocks     = errors.New("error occurred when getting stocks")
 	ErrGetProducts   = errors.New("error occurred when getting products")
 	ErrGetProduct    = errors.New("error occurred when getting product")
 	ErrInsertProduct = errors.New("error occurred when inserting product")

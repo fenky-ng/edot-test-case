@@ -2,7 +2,6 @@ package product
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/fenky-ng/edot-test-case/product/internal/constant"
 	"github.com/fenky-ng/edot-test-case/product/internal/model"
@@ -20,7 +19,7 @@ func (u *ProductUsecase) GetProducts(ctx context.Context, input model.GetProduct
 		return output, err
 	}
 
-	warehousesByProductId, err := u.getProductWarehouses(ctx, output.Products)
+	stocksByProductId, err := u.getStocks(ctx, output.Products)
 	if err != nil {
 		return output, err
 	}
@@ -31,14 +30,14 @@ func (u *ProductUsecase) GetProducts(ctx context.Context, input model.GetProduct
 		output.Products[index].Shop.Name = shop.Name
 		output.Products[index].Shop.Status = shop.Status
 
-		// warehouse
-		warehouses := warehousesByProductId[output.Products[index].Id]
-		for _, warehouse := range warehouses {
-			if warehouse.Status == constant.ShopWarehouseStatus_Inactive { // only show stock from active warehouse
+		// stock
+		stocks := stocksByProductId[output.Products[index].Id]
+		for _, stock := range stocks {
+			if stock.WarehouseStatus == constant.WarehouseStatus_Inactive { // only show stock from active warehouse
 				continue
 			}
-			output.Products[index].Stock.Total += warehouse.Stock
-			output.Products[index].Stock.Warehouses = append(output.Products[index].Stock.Warehouses, warehouse)
+			output.Products[index].Stock.Total += stock.Stock
+			output.Products[index].Stock.Warehouses = append(output.Products[index].Stock.Warehouses, stock)
 		}
 	}
 
@@ -83,11 +82,11 @@ func (u *ProductUsecase) getShops(
 	return
 }
 
-func (u *ProductUsecase) getProductWarehouses(
+func (u *ProductUsecase) getStocks(
 	ctx context.Context,
 	products []model.Product,
-) (warehousesByProductId map[uuid.UUID][]model.ProductWarehouse, err error) {
-	warehousesByProductId = make(map[uuid.UUID][]model.ProductWarehouse)
+) (stocksByProductId map[uuid.UUID][]model.ProductWarehouse, err error) {
+	stocksByProductId = make(map[uuid.UUID][]model.ProductWarehouse)
 
 	productIds := []uuid.UUID{}
 	uniqueProductId := make(map[uuid.UUID]struct{})
@@ -95,31 +94,31 @@ func (u *ProductUsecase) getProductWarehouses(
 		if _, exists := uniqueProductId[product.Shop.Id]; exists {
 			continue
 		}
-		productIds = append(productIds, product.Shop.Id)
-		uniqueProductId[product.Shop.Id] = struct{}{}
+		productIds = append(productIds, product.Id)
+		uniqueProductId[product.Id] = struct{}{}
 	}
 
 	if len(productIds) == 0 {
 		return
 	}
 
-	productWarehousesOut, err := u.repoHttpWarehouse.GetProductWarehouses(ctx, model.GetProductWarehousesInput{
+	stocksOut, err := u.repoHttpWarehouse.GetStocks(ctx, model.GetStocksInput{
 		ProductIds: productIds,
 	})
 	if err != nil {
 		return
 	}
 
-	// TODO
-	fmt.Println(productWarehousesOut)
-
-	// for _, shop := range shopsOut.Shops {
-	// 	shopById[shop.Id] = model.Shop{
-	// 		Id:     shop.Id,
-	// 		Name:   shop.Name,
-	// 		Status: shop.Status,
-	// 	}
-	// }
+	stocksByProductId = make(map[uuid.UUID][]model.ProductWarehouse)
+	for _, item := range stocksOut.Stocks {
+		for _, warehouse := range item.Warehouses {
+			stocksByProductId[item.ProductId] = append(stocksByProductId[item.ProductId], model.ProductWarehouse{
+				WarehouseId:     warehouse.WarehouseId,
+				WarehouseStatus: warehouse.WarehouseStatus,
+				Stock:           warehouse.Stock,
+			})
+		}
+	}
 
 	return
 }

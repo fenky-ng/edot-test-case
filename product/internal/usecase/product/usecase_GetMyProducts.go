@@ -21,7 +21,7 @@ func (u *ProductUsecase) GetMyProducts(ctx context.Context, input model.GetMyPro
 		return output, err
 	}
 
-	warehousesByProductId, err := u.getProductWarehouses(ctx, output.Products)
+	stocksByProductId, err := u.getStocks(ctx, productsOut.Products)
 	if err != nil {
 		return output, err
 	}
@@ -31,12 +31,12 @@ func (u *ProductUsecase) GetMyProducts(ctx context.Context, input model.GetMyPro
 		productsOut.Products[index].Shop.Name = shopOut.Name
 		productsOut.Products[index].Shop.Status = shopOut.Status
 
-		// warehouse
-		warehouses := warehousesByProductId[output.Products[index].Id]
-		for _, warehouse := range warehouses {
+		// stocks
+		stocks := stocksByProductId[productsOut.Products[index].Id]
+		for _, stock := range stocks {
 			// show stock from all warehouse
-			output.Products[index].Stock.Total += warehouse.Stock
-			output.Products[index].Stock.Warehouses = append(output.Products[index].Stock.Warehouses, warehouse)
+			productsOut.Products[index].Stock.Total += stock.Stock
+			productsOut.Products[index].Stock.Warehouses = append(productsOut.Products[index].Stock.Warehouses, stock)
 		}
 	}
 
