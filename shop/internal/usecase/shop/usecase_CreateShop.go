@@ -33,7 +33,7 @@ func (u *ShopUsecase) CreateShop(ctx context.Context, input model.CreateShopInpu
 		Name:      input.Name,
 		Status:    constant.ShopStatus_Active,
 		CreatedAt: time.Now().UnixMilli(),
-		CreatedBy: input.UserId,
+		CreatedBy: input.UserId.String(),
 	})
 	if err != nil {
 		return output, err

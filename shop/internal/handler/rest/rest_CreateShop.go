@@ -1,10 +1,12 @@
 package rest
 
 import (
+	in_err "github.com/fenky-ng/edot-test-case/shop/internal/error"
 	"github.com/fenky-ng/edot-test-case/shop/internal/model"
 	gin_req "github.com/fenky-ng/edot-test-case/shop/internal/utility/gin/request"
 	gin_res "github.com/fenky-ng/edot-test-case/shop/internal/utility/gin/response"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (h *RestAPI) CreateShop(c *gin.Context) {
@@ -23,10 +25,13 @@ func (h *RestAPI) CreateShop(c *gin.Context) {
 		return
 	}
 
-	out, err := h.usecase.ShopUsecase.CreateShop(ctx, model.CreateShopInput{
-		UserId: userId,
-		Name:   req.Name,
-	})
+	in, err := validateAndMapCreateShopInput(userId, req)
+	if err != nil {
+		gin_res.ReturnError(c, err)
+		return
+	}
+
+	out, err := h.usecase.ShopUsecase.CreateShop(ctx, in)
 	if err != nil {
 		gin_res.ReturnError(c, err)
 		return
@@ -37,4 +42,20 @@ func (h *RestAPI) CreateShop(c *gin.Context) {
 	}
 	gin_res.ReturnOK(c, res)
 	return
+}
+
+func validateAndMapCreateShopInput(
+	userId uuid.UUID,
+	req model.RestAPICreateShopRequest,
+) (output model.CreateShopInput, err error) {
+	if len(req.Name) < 3 {
+		err = in_err.ErrInvalidName
+		return output, err
+	}
+
+	output = model.CreateShopInput{
+		UserId: userId,
+		Name:   req.Name,
+	}
+	return output, nil
 }

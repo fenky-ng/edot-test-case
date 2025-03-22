@@ -8,7 +8,9 @@ import (
 
 	"github.com/fenky-ng/edot-test-case/product/internal/config"
 	repo_db_product "github.com/fenky-ng/edot-test-case/product/internal/repository/db/product"
+	repo_http_shop "github.com/fenky-ng/edot-test-case/product/internal/repository/http/shop"
 	repo_http_user "github.com/fenky-ng/edot-test-case/product/internal/repository/http/user"
+	repo_http_warehouse "github.com/fenky-ng/edot-test-case/product/internal/repository/http/warehouse"
 	"github.com/fenky-ng/edot-test-case/product/internal/usecase"
 	usecase_product "github.com/fenky-ng/edot-test-case/product/internal/usecase/product"
 	usecase_user "github.com/fenky-ng/edot-test-case/product/internal/usecase/user"
@@ -36,6 +38,16 @@ func InitializeUsecase(
 		wire.Struct(new(repo_db_product.InitRepoDbProductOptions), "*"),
 		repo_db_product.InitRepoDbProduct,
 		wire.Bind(new(repo_db_product.RepoDbProductInterface), new(*repo_db_product.RepoDbProduct)),
+
+		// shop http repository
+		wire.Struct(new(repo_http_shop.InitRepoHttpShopOptions), "*"),
+		repo_http_shop.InitRepoHttpShop,
+		wire.Bind(new(repo_http_shop.RepoHttpShopInterface), new(*repo_http_shop.RepoHttpShop)),
+
+		// warehouse http repository
+		wire.Struct(new(repo_http_warehouse.InitRepoHttpWarehouseOptions), "*"),
+		repo_http_warehouse.InitRepoHttpWarehouse,
+		wire.Bind(new(repo_http_warehouse.RepoHttpWarehouseInterface), new(*repo_http_warehouse.RepoHttpWarehouse)),
 
 		// product usecase
 		wire.Struct(new(usecase_product.InitProductUsecaseOptions), "*"),

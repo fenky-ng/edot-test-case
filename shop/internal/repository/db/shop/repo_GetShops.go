@@ -3,8 +3,10 @@ package shop
 import (
 	"context"
 	"database/sql"
+	"errors"
 
 	"github.com/fenky-ng/edot-test-case/shop/internal/constant"
+	in_err "github.com/fenky-ng/edot-test-case/shop/internal/error"
 	"github.com/fenky-ng/edot-test-case/shop/internal/model"
 	"github.com/lib/pq"
 )
@@ -29,6 +31,7 @@ func (r *RepoDbShop) GetShops(ctx context.Context, input model.GetShopsInput) (o
 		item = model.Shop{} // reset
 	})
 	if err != nil {
+		err = errors.Join(in_err.ErrGetShops, err)
 		return output, err
 	}
 

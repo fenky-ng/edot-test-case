@@ -7,6 +7,18 @@ import (
 	"github.com/google/uuid"
 )
 
+func getJwt(c *gin.Context) (jwt string, err error) {
+	val, exists := c.Get(constant.JwtKey)
+	if !exists {
+		err = in_err.ErrNoJWT
+		return jwt, err
+	}
+
+	jwt = val.(string)
+
+	return jwt, nil
+}
+
 func getUserId(c *gin.Context) (userId uuid.UUID, err error) {
 	val, exists := c.Get(constant.UserIdKey)
 	if !exists {

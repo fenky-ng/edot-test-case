@@ -51,6 +51,7 @@ func Middleware() gin.HandlerFunc {
 			return
 		}
 
+		c.Set(constant.JwtKey, token)
 		c.Set(constant.UserIdKey, authOut.Id)
 
 		// process request

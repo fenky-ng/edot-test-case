@@ -14,6 +14,7 @@ services:
       DATABASE_URL: "postgres://user:password@edot-product-postgres:5432/edot_product_db?sslmode=disable"
       USER_REST_SERVICE_ADDRESS: "http://edot-user-app:9000"
       SHOP_REST_SERVICE_ADDRESS: "http://edot-shop-app:9000"
+      WAREHOUSE_REST_SERVICE_ADDRESS: "http://edot-warehouse-app:9000"
   db:
     image: postgres:15
     environment:

@@ -65,7 +65,7 @@ type InsertShopInput struct {
 	Name      string
 	Status    constant.ShopStatus
 	CreatedAt int64
-	CreatedBy uuid.UUID
+	CreatedBy string
 }
 
 type InsertShopOutput struct {

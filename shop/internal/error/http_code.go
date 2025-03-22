@@ -11,6 +11,7 @@ var errorHttpCodeMap = map[error]int{
 	ErrInvalidShopId:          http.StatusBadRequest,
 	ErrMissingRequestBody:     http.StatusBadRequest,
 	ErrInvalidRequestBody:     http.StatusBadRequest,
+	ErrInvalidName:            http.StatusBadRequest,
 	ErrShopNotFound:           http.StatusNotFound,
 	ErrShopDeactivated:        http.StatusForbidden,
 	ErrAlreadyOwnAShop:        http.StatusConflict,

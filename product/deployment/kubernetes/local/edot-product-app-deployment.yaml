@@ -27,8 +27,8 @@ spec:
               value: "http://edot-user-app:9100"
             - name: SHOP_REST_SERVICE_ADDRESS
               value: "http://edot-shop-app:9200"
-            - name: PRODUCT_REST_SERVICE_ADDRESS
-              value: "http://edot-product-app:9300"
+            - name: WAREHOUSE_REST_SERVICE_ADDRESS
+              value: "http://edot-product-app:9400"
 ---
 apiVersion: v1
 kind: Service

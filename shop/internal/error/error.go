@@ -11,11 +11,13 @@ var (
 	ErrInvalidShopId          = errors.New("invalid shop id")
 	ErrMissingRequestBody     = errors.New("Missing request body.")
 	ErrInvalidRequestBody     = errors.New("Invalid request body.")
+	ErrInvalidName            = errors.New("invalid name")
 	ErrShopNotFound           = errors.New("shop not found")
 	ErrShopDeactivated        = errors.New("shop is deactivated")
 	ErrAlreadyOwnAShop        = errors.New("user already own a shop")
 
 	// system error
+	ErrGetShops   = errors.New("error occurred when getting shops")
 	ErrGetShop    = errors.New("error occurred when getting shop")
 	ErrInsertShop = errors.New("error occurred when inserting shop")
 )
