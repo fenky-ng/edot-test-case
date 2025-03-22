@@ -3,8 +3,8 @@ package constant
 type WarehouseStatus string
 
 const (
-	WarehouseStatus_Active  = "ACTIVE"
-	WarehouseStatus_Inctive = "INACTIVE"
+	WarehouseStatus_Active  WarehouseStatus = "ACTIVE"
+	WarehouseStatus_Inctive WarehouseStatus = "INACTIVE"
 )
 
 func (t WarehouseStatus) String() string {
