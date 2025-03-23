@@ -12,3 +12,10 @@ func ParseStringArrToUuidArr(in []string) (out []uuid.UUID, err error) {
 	}
 	return out, nil
 }
+
+func ParseUuidArrToStringArr(in []uuid.UUID) (out []string) {
+	for _, data := range in {
+		out = append(out, data.String())
+	}
+	return out
+}

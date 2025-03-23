@@ -3,21 +3,25 @@ package warehouse
 import (
 	"database/sql"
 
+	dbtx "github.com/fenky-ng/edot-test-case/warehouse/internal/utility/database/tx"
 	"github.com/leporo/sqlf"
 )
 
 type RepoDbWarehouse struct {
+	dbtx.DbTxInterface
 	db  *sql.DB
 	sql *sqlf.Dialect
 }
 
 type InitRepoDbWarehouseOptions struct {
-	DB *sql.DB
+	DbTx dbtx.DbTxInterface
+	DB   *sql.DB
 }
 
 func InitRepoDbWarehouse(opts InitRepoDbWarehouseOptions) *RepoDbWarehouse {
 	return &RepoDbWarehouse{
-		db:  opts.DB,
-		sql: sqlf.PostgreSQL,
+		DbTxInterface: opts.DbTx,
+		db:            opts.DB,
+		sql:           sqlf.PostgreSQL,
 	}
 }

@@ -1,6 +1,7 @@
 package rest
 
 import (
+	in_err "github.com/fenky-ng/edot-test-case/warehouse/internal/error"
 	"github.com/fenky-ng/edot-test-case/warehouse/internal/model"
 	gin_req "github.com/fenky-ng/edot-test-case/warehouse/internal/utility/gin/request"
 	gin_res "github.com/fenky-ng/edot-test-case/warehouse/internal/utility/gin/response"
@@ -50,6 +51,26 @@ func validateAndMapCreateOrUpdateStockInput(
 	userId uuid.UUID,
 	req model.RestAPICreateOrUpdateStockRequest,
 ) (output model.CreateOrUpdateStockInput, err error) {
+	if req.WarehouseId == uuid.Nil {
+		err = in_err.ErrInvalidWarehouseId
+		return output, err
+	}
+
+	if req.ProductId == uuid.Nil {
+		err = in_err.ErrInvalidProductId
+		return output, err
+	}
+
+	if req.Stock < 0 {
+		err = in_err.ErrInvalidStock
+		return output, err
+	}
+
+	if req.Stock == 0 && req.ToWarehouseId != uuid.Nil {
+		err = in_err.ErrInvalidStockTransfer
+		return output, err
+	}
+
 	output = model.CreateOrUpdateStockInput{
 		JWT:           jwt,
 		UserId:        userId,

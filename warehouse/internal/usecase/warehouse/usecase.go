@@ -10,6 +10,9 @@ type WarehouseUsecase struct {
 	repoDbWarehouse db_warehouse.RepoDbWarehouseInterface
 	repoHttpShop    http_shop.RepoHttpShopInterface
 	repoHttpProduct http_product.RepoHttpProductInterface
+
+	// self
+	warehouseUsecase WarehouseUsecaseInterface
 }
 
 type InitWarehouseUsecaseOptions struct {
@@ -19,9 +22,11 @@ type InitWarehouseUsecaseOptions struct {
 }
 
 func InitWarehouseUsecase(opts InitWarehouseUsecaseOptions) *WarehouseUsecase {
-	return &WarehouseUsecase{
+	u := &WarehouseUsecase{
 		repoDbWarehouse: opts.RepoDbWarehouse,
 		repoHttpShop:    opts.RepoHttpShop,
 		repoHttpProduct: opts.RepoHttpProduct,
 	}
+	u.warehouseUsecase = u
+	return u
 }

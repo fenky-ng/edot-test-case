@@ -29,6 +29,8 @@ spec:
               value: "http://edot-shop-app:9200"
             - name: PRODUCT_REST_SERVICE_ADDRESS
               value: "http://edot-product-app:9300"
+            - name: API_KEY_EXT_ORDER
+              value: "b8f3e7a9c2d645fba01e8c7d4f92ab3d"
 ---
 apiVersion: v1
 kind: Service

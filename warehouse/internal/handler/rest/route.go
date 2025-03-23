@@ -44,7 +44,7 @@ func AssignRoute(
 	}, api.GetStocks)
 
 	manager.AddEndpoint(model.HTTPMiddlewareManagerRequest{
-		Method: http.MethodPut,
+		Method: http.MethodPost,
 		Path:   "/api/v1/warehouses/stocks/deduct",
-	}, api.DeductProductStock)
+	}, api.DeductStocks)
 }

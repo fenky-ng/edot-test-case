@@ -59,10 +59,11 @@ type InsertWarehouseOutput struct {
 }
 
 type GetWarehousesInput struct {
-	Id     uuid.UUID
+	Ids    []uuid.UUID
 	ShopId uuid.UUID
 }
 
 type GetWarehousesOutput struct {
-	Warehouses []Warehouse
+	Warehouses    []Warehouse
+	WarehouseById map[uuid.UUID]Warehouse
 }

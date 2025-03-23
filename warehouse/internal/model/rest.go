@@ -63,3 +63,19 @@ type RestAPIProductWarehouse struct {
 type RestAPIGetStocksResponse struct {
 	Products []RestAPIProductStock `json:"data"`
 }
+
+type RestAPIDeductStocksRequest struct {
+	UserId  uuid.UUID         `json:"userId"`
+	OrderNo string            `json:"orderNo"`
+	Items   []DeductStockItem `json:"items"`
+}
+
+type RestAPIDeductStockItem struct {
+	ProductId   uuid.UUID `json:"productId"`
+	WarehouseId uuid.UUID `json:"warehouseId"`
+	Quantity    int64     `json:"quantity"`
+}
+
+type RestAPIDeductStocksResponse struct {
+	Successful bool `json:"successful"`
+}

@@ -9,6 +9,7 @@ import (
 	in_err "github.com/fenky-ng/edot-test-case/warehouse/internal/error"
 	"github.com/fenky-ng/edot-test-case/warehouse/internal/model"
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 func (r *RepoDbWarehouse) GetWarehouses(ctx context.Context, input model.GetWarehousesInput) (output model.GetWarehousesOutput, err error) {
@@ -21,16 +22,18 @@ func (r *RepoDbWarehouse) GetWarehouses(ctx context.Context, input model.GetWare
 		Select("status").To(&item.Status).
 		Where("deleted_at IS NULL")
 
-	if input.Id != uuid.Nil {
-		stmt.Where("id = ?", input.Id)
+	if len(input.Ids) != 0 {
+		stmt.Where("id = ANY(?)", pq.Array(input.Ids))
 	}
 
 	if input.ShopId != uuid.Nil {
 		stmt.Where("shop_id = ?", input.ShopId)
 	}
 
+	output.WarehouseById = make(map[uuid.UUID]model.Warehouse)
 	err = stmt.QueryAndClose(ctx, r.db, func(rows *sql.Rows) {
 		output.Warehouses = append(output.Warehouses, item)
+		output.WarehouseById[item.Id] = item
 		item = model.Warehouse{} // reset
 	})
 	if err != nil {

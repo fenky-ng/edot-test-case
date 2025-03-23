@@ -6,6 +6,7 @@ import (
 
 	in_err "github.com/fenky-ng/edot-test-case/warehouse/internal/error"
 	"github.com/fenky-ng/edot-test-case/warehouse/internal/model"
+	"github.com/google/uuid"
 )
 
 func (u *WarehouseUsecase) UpdateWarehouse(ctx context.Context, input model.UpdateWarehouseInput) (output model.UpdateWarehouseOutput, err error) {
@@ -17,7 +18,9 @@ func (u *WarehouseUsecase) UpdateWarehouse(ctx context.Context, input model.Upda
 	}
 
 	warehousesOut, err := u.repoDbWarehouse.GetWarehouses(ctx, model.GetWarehousesInput{
-		Id: input.WarehouseId,
+		Ids: []uuid.UUID{
+			input.WarehouseId,
+		},
 	})
 	if err != nil {
 		return output, err

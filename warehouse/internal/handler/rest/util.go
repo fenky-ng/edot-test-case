@@ -7,6 +7,18 @@ import (
 	"github.com/google/uuid"
 )
 
+func (h *RestAPI) validateApiKey(c *gin.Context) error {
+	apiKey := c.GetHeader(constant.HeaderApiKey)
+	if apiKey == "" {
+		return in_err.ErrMissingApiKey
+	}
+	if apiKey != h.config.ApiKeyExternalOrder {
+		return in_err.ErrInvalidApiKey
+	}
+
+	return nil
+}
+
 func getJwt(c *gin.Context) (jwt string, err error) {
 	val, exists := c.Get(constant.JwtKey)
 	if !exists {

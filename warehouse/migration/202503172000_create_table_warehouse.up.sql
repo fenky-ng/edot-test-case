@@ -32,5 +32,7 @@ CREATE TABLE IF NOT EXISTS "stock" (
     "created_by" varchar NOT NULL DEFAULT '',
     "updated_at" int8,
     "updated_by" varchar,
-    "deleted_at" int8
+    "deleted_at" int8,
+
+    CONSTRAINT stock_unique_warehouse_id_product_id UNIQUE (warehouse_id, product_id)
 );

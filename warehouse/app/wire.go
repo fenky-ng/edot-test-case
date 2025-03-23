@@ -15,6 +15,7 @@ import (
 	usecase_user "github.com/fenky-ng/edot-test-case/warehouse/internal/usecase/user"
 	usecase_warehouse "github.com/fenky-ng/edot-test-case/warehouse/internal/usecase/warehouse"
 	db "github.com/fenky-ng/edot-test-case/warehouse/internal/utility/database"
+	dbtx "github.com/fenky-ng/edot-test-case/warehouse/internal/utility/database/tx"
 )
 
 func InitializeUsecase(
@@ -23,6 +24,11 @@ func InitializeUsecase(
 	wire.Build(
 		// db
 		db.InitDatabase,
+
+		// dbtx
+		wire.Struct(new(dbtx.InitDbTxOptions), "*"),
+		dbtx.InitDbTx,
+		wire.Bind(new(dbtx.DbTxInterface), new(*dbtx.DbTx)),
 
 		// user http repository
 		wire.Struct(new(repo_http_user.InitRepoHttpUserOptions), "*"),
