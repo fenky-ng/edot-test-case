@@ -23,6 +23,7 @@ func (u *OrderUsecase) CreateOrder(ctx context.Context, input model.CreateOrderI
 
 	ctx, err = u.repoDbOrder.Begin(ctx, nil)
 	if err != nil {
+		err = errors.Join(in_err.ErrDatabaseTransaction, err)
 		return output, err
 	}
 

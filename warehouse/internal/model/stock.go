@@ -1,8 +1,12 @@
 package model
 
 import (
+	"fmt"
+
 	"github.com/fenky-ng/edot-test-case/warehouse/internal/constant"
+	"github.com/google/go-cmp/cmp"
 	"github.com/google/uuid"
+	"go.uber.org/mock/gomock"
 )
 
 type ProductStock struct {
@@ -81,6 +85,23 @@ type UpsertStockInput struct {
 	UpsertedBy  string
 }
 
+func (expectedInput UpsertStockInput) Matcher() gomock.Matcher {
+	return gomock.Cond(func(x any) bool {
+		actualInput := x.(UpsertStockInput)
+
+		// set zero value for ignored attributes
+		expectedInput.Id, actualInput.Id = uuid.Nil, uuid.Nil
+		expectedInput.UpsertedAt, actualInput.UpsertedAt = 0, 0
+
+		diff := cmp.Diff(expectedInput, actualInput)
+		if diff != "" {
+			fmt.Printf("[UpsertStockInputMatcher] DEBUG input mismatch (-want +got):\n%s\n", diff)
+		}
+
+		return diff == ""
+	})
+}
+
 type UpsertStockOutput struct {
 	Id uuid.UUID
 }
@@ -93,6 +114,22 @@ type DeductStockInput struct {
 	RequestedAt int64
 	RequestedBy string
 	NoWait      bool
+}
+
+func (expectedInput DeductStockInput) Matcher() gomock.Matcher {
+	return gomock.Cond(func(x any) bool {
+		actualInput := x.(DeductStockInput)
+
+		// set zero value for ignored attributes
+		expectedInput.RequestedAt, actualInput.RequestedAt = 0, 0
+
+		diff := cmp.Diff(expectedInput, actualInput)
+		if diff != "" {
+			fmt.Printf("[DeductStockInputMatcher] DEBUG input mismatch (-want +got):\n%s\n", diff)
+		}
+
+		return diff == ""
+	})
 }
 
 type DeductStockOutput struct {

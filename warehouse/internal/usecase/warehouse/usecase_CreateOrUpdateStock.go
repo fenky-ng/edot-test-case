@@ -18,6 +18,7 @@ func (u *WarehouseUsecase) CreateOrUpdateStock(ctx context.Context, input model.
 
 	ctx, err = u.repoDbWarehouse.Begin(ctx, nil)
 	if err != nil {
+		err = errors.Join(in_err.ErrDatabaseTransaction, err)
 		return output, err
 	}
 
@@ -94,6 +95,11 @@ func (u *WarehouseUsecase) ValidateCreateOrUpdateStock(
 		}
 	}
 
+	if input.ToWarehouseId != uuid.Nil && input.WarehouseId == input.ToWarehouseId {
+		err = in_err.ErrInvalidStockTransferDestination
+		return err
+	}
+
 	// validate product
 	productOut, err := u.repoHttpProduct.GetProductById(ctx, model.GetProductByIdInput{
 		Id: input.ProductId,
@@ -129,11 +135,6 @@ func (u *WarehouseUsecase) TransferStock(
 	ctx context.Context,
 	input model.CreateOrUpdateStockInput,
 ) (err error) {
-	if input.WarehouseId == input.ToWarehouseId {
-		err = in_err.ErrInvalidStockTransferDestination
-		return err
-	}
-
 	now := time.Now()
 
 	_, err = u.repoDbWarehouse.DeductStock(ctx, model.DeductStockInput{

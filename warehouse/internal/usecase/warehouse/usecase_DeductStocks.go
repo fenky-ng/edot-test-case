@@ -22,6 +22,7 @@ func (u *WarehouseUsecase) DeductStocks(ctx context.Context, input model.DeductS
 
 	ctx, err = u.repoDbWarehouse.Begin(ctx, nil)
 	if err != nil {
+		err = errors.Join(in_err.ErrDatabaseTransaction, err)
 		return output, err
 	}
 
@@ -53,6 +54,10 @@ func (u *WarehouseUsecase) ValidateDeductStocks(
 	ctx context.Context,
 	input model.DeductStocksInput,
 ) (err error) {
+	if input.Release {
+		return nil
+	}
+
 	var warehouseIds []uuid.UUID
 	uniqueWarehouseId := make(map[uuid.UUID]struct{})
 	for _, item := range input.Items {

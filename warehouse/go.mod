@@ -5,6 +5,8 @@ go 1.22.10
 require (
 	github.com/caarlos0/env/v10 v10.0.0
 	github.com/gin-gonic/gin v1.10.0
+	github.com/go-faker/faker/v4 v4.6.0
+	github.com/google/go-cmp v0.5.5
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.6.0
 	github.com/leporo/sqlf v1.4.0
@@ -40,7 +42,7 @@ require (
 	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sys v0.20.0 // indirect
-	golang.org/x/text v0.15.0 // indirect
+	golang.org/x/text v0.18.0 // indirect
 	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
