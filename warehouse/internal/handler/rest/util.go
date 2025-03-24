@@ -12,7 +12,7 @@ func (h *RestAPI) validateApiKey(c *gin.Context) error {
 	if apiKey == "" {
 		return in_err.ErrMissingApiKey
 	}
-	if apiKey != h.config.ApiKeyExternalOrder {
+	if apiKey != h.config.RestApiKeyExternalOrder {
 		return in_err.ErrInvalidApiKey
 	}
 

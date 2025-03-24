@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: edot-user-app
+  name: edot-user-rest
   labels:
-    app: edot-user-app
+    app: edot-user-rest
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: edot-user-app
+      app: edot-user-rest
   template:
     metadata:
       labels:
-        app: edot-user-app
+        app: edot-user-rest
     spec:
       containers:
         - name: edot-user
@@ -34,10 +34,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: edot-user-app
+  name: edot-user-rest
 spec:
   selector:
-    app: edot-user-app
+    app: edot-user-rest
   ports:
     - protocol: TCP
       port: 9100

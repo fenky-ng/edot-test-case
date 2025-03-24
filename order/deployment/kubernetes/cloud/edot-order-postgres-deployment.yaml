@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: edot-order-postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edot-order-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edot-order-postgres
+  template:
+    metadata:
+      labels:
+        app: edot-order-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: edot-order-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: edot-order-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: "edot_order_db"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-storage
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: edot-order-postgres-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edot-order-postgres
+spec:
+  selector:
+    app: edot-order-postgres
+  ports:
+    - protocol: TCP
+      port: 5932
+      targetPort: 5432
+  type: LoadBalancer

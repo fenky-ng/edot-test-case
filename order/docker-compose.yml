@@ -1,0 +1,79 @@
+services:
+  edot-order-rest:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: edot-order:latest
+    command: ["/app/edot-order-be", "rest"]
+    ports:
+      - "9500:9000"
+    expose:
+      - 9500
+    depends_on:
+      edot-order-postgres:
+        condition: service_healthy
+    networks:
+      edot-network:
+        aliases:
+          - edot-order-rest
+    environment:
+      DATABASE_URL: "postgres://user:password@edot-order-postgres:5432/edot_order_db?sslmode=disable"
+      USER_REST_SERVICE_ADDRESS: "http://edot-user-rest:9000"
+      SHOP_REST_SERVICE_ADDRESS: "http://edot-shop-rest:9000"
+      PRODUCT_REST_SERVICE_ADDRESS: "http://edot-product-rest:9000"
+      WAREHOUSE_REST_SERVICE_ADDRESS: "http://edot-warehouse-rest:9000"
+      WAREHOUSE_REST_SERVICE_API_KEY: "b8f3e7a9c2d645fba01e8c7d4f92ab3d"
+  edot-order-cron:
+    image: edot-order:latest
+    command: ["/app/edot-order-be", "cron"]
+    depends_on:
+      edot-order-postgres:
+        condition: service_healthy
+    networks:
+      edot-network:
+        aliases:
+          - edot-order-cron
+    environment:
+      DATABASE_URL: "postgres://user:password@edot-order-postgres:5432/edot_order_db?sslmode=disable"
+      USER_REST_SERVICE_ADDRESS: "http://edot-user-rest:9000"
+      SHOP_REST_SERVICE_ADDRESS: "http://edot-shop-rest:9000"
+      PRODUCT_REST_SERVICE_ADDRESS: "http://edot-product-rest:9000"
+      WAREHOUSE_REST_SERVICE_ADDRESS: "http://edot-warehouse-rest:9000"
+      WAREHOUSE_REST_SERVICE_API_KEY: "b8f3e7a9c2d645fba01e8c7d4f92ab3d"
+  edot-order-postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: edot_order_db
+    ports:
+      - 5932:5432
+    expose:
+      - 5932
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - edot-order-db:/var/lib/postgresql/data
+    networks:
+      edot-network:
+        aliases:
+          - edot-order-postgres
+  edot-order-migrate:
+    image: migrate/migrate
+    depends_on:
+      edot-order-postgres:
+        condition: service_healthy
+    networks:
+      - edot-network
+    volumes:
+      - ./migration:/migration
+    command: ["-path", "/migration", "-database",  "postgres://user:password@edot-order-postgres:5432/edot_order_db?sslmode=disable", "up"]
+volumes:
+  edot-order-db:
+    driver: local
+networks:
+  edot-network:
+    external: true

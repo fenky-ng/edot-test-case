@@ -9,6 +9,7 @@ import (
 	in_err "github.com/fenky-ng/edot-test-case/product/internal/error"
 	"github.com/fenky-ng/edot-test-case/product/internal/model"
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 func (r *RepoDbProduct) GetProducts(ctx context.Context, input model.GetProductsInput) (output model.GetProductsOutput, err error) {
@@ -23,6 +24,10 @@ func (r *RepoDbProduct) GetProducts(ctx context.Context, input model.GetProducts
 		Select("status").To(&item.Status).
 		Where("deleted_at IS NULL").
 		OrderBy("name ASC")
+
+	if len(input.Ids) != 0 {
+		stmt.Where("id = ANY(?)", pq.Array(input.Ids))
+	}
 
 	if input.ShopId != uuid.Nil {
 		stmt.Where("shop_id = ?", input.ShopId)

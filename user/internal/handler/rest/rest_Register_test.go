@@ -183,7 +183,7 @@ func Test_RestAPI_Register(t *testing.T) {
 			},
 		},
 		{
-			name: "should return response internal server error if unmapped error occured in AuthUsecase.Register",
+			name: "should return response internal server error if unmapped error occurred in AuthUsecase.Register",
 			reqBody: model.RestAPIRegisterRequest{
 				Name:         name,
 				PhoneOrEmail: email,

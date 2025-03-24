@@ -158,7 +158,7 @@ func Test_RestAPI_Login(t *testing.T) {
 			},
 		},
 		{
-			name: "should return response internal server error if unmapped error occured in AuthUsecase.Login",
+			name: "should return response internal server error if unmapped error occurred in AuthUsecase.Login",
 			reqBody: model.RestAPILoginRequest{
 				PhoneOrEmail: email,
 				Password:     password,

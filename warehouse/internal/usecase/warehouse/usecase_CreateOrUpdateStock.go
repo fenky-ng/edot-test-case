@@ -11,7 +11,7 @@ import (
 )
 
 func (u *WarehouseUsecase) CreateOrUpdateStock(ctx context.Context, input model.CreateOrUpdateStockInput) (output model.CreateOrUpdateStockOutput, err error) {
-	err = u.warehouseUsecase.ValidateCreateOrUpdateStock(ctx, input)
+	err = u.WarehouseUsecase.ValidateCreateOrUpdateStock(ctx, input)
 	if err != nil {
 		return output, err
 	}
@@ -45,7 +45,7 @@ func (u *WarehouseUsecase) CreateOrUpdateStock(ctx context.Context, input model.
 	}
 
 	// TRANSFER
-	err = u.warehouseUsecase.TransferStock(ctx, input)
+	err = u.WarehouseUsecase.TransferStock(ctx, input)
 	if err != nil {
 		return output, err
 	}

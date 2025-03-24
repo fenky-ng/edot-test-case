@@ -1,22 +1,28 @@
 services:
-  app:
-    build: .
+  edot-warehouse-rest:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: edot-warehouse:latest
+    command: ["/app/edot-warehouse-be", "rest"]
     ports:
       - "9400:9000"
+    expose:
+      - 9400
     depends_on:
-      db:
+      edot-warehouse-postgres:
         condition: service_healthy
     networks:
       edot-network:
         aliases:
-          - edot-warehouse-app
+          - edot-warehouse-rest
     environment:
       DATABASE_URL: "postgres://user:password@edot-warehouse-postgres:5432/edot_warehouse_db?sslmode=disable"
-      USER_REST_SERVICE_ADDRESS: "http://edot-user-app:9000"
-      SHOP_REST_SERVICE_ADDRESS: "http://edot-shop-app:9000"
-      PRODUCT_REST_SERVICE_ADDRESS: "http://edot-product-app:9000"
-      API_KEY_EXT_ORDER: "b8f3e7a9c2d645fba01e8c7d4f92ab3d"
-  db:
+      USER_REST_SERVICE_ADDRESS: "http://edot-user-rest:9000"
+      SHOP_REST_SERVICE_ADDRESS: "http://edot-shop-rest:9000"
+      PRODUCT_REST_SERVICE_ADDRESS: "http://edot-product-rest:9000"
+      REST_API_KEY_EXT_ORDER: "b8f3e7a9c2d645fba01e8c7d4f92ab3d"
+  edot-warehouse-postgres:
     image: postgres:15
     environment:
       POSTGRES_USER: user
@@ -24,23 +30,23 @@ services:
       POSTGRES_DB: edot_warehouse_db
     ports:
       - 5832:5432
+    expose:
+      - 5832
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready" ]
       interval: 10s
       timeout: 5s
       retries: 3
-    expose:
-      - 5832
     volumes:
       - edot-warehouse-db:/var/lib/postgresql/data
     networks:
       edot-network:
         aliases:
           - edot-warehouse-postgres
-  migrate:
+  edot-warehouse-migrate:
     image: migrate/migrate
     depends_on:
-      db:
+      edot-warehouse-postgres:
         condition: service_healthy
     networks:
       - edot-network

@@ -49,6 +49,7 @@ func validateAndMapDeductStocksInput(req model.RestAPIDeductStocksRequest) (outp
 		UserId:  req.UserId,
 		OrderNo: req.OrderNo,
 		Items:   make([]model.DeductStockItem, 0),
+		Release: req.Release,
 	}
 
 	for _, item := range req.Items {
@@ -60,8 +61,8 @@ func validateAndMapDeductStocksInput(req model.RestAPIDeductStocksRequest) (outp
 			err = in_err.ErrInvalidWarehouseId
 			return output, err
 		}
-		if item.Quantity < 0 {
-			err = in_err.ErrInvalidStock
+		if item.Quantity < 1 {
+			err = in_err.ErrInvalidQuantityDeduction
 			return output, err
 		}
 		output.Items = append(output.Items, model.DeductStockItem{

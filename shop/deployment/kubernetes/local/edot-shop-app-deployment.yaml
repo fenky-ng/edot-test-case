@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: edot-shop-app
+  name: edot-shop-rest
   labels:
-    app: edot-shop-app
+    app: edot-shop-rest
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: edot-shop-app
+      app: edot-shop-rest
   template:
     metadata:
       labels:
-        app: edot-shop-app
+        app: edot-shop-rest
     spec:
       containers:
         - name: edot-shop
@@ -24,15 +24,15 @@ spec:
             - name: DATABASE_URL
               value: "postgres://user:password@edot-shop-postgres:5632/edot_shop_db?sslmode=disable"
             - name: USER_REST_SERVICE_ADDRESS
-              value: "http://edot-user-app:9100"
+              value: "http://edot-user-rest:9100"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: edot-shop-app
+  name: edot-shop-rest
 spec:
   selector:
-    app: edot-shop-app
+    app: edot-shop-rest
   ports:
     - protocol: TCP
       port: 9200

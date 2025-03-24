@@ -11,8 +11,8 @@ type WarehouseUsecase struct {
 	repoHttpShop    http_shop.RepoHttpShopInterface
 	repoHttpProduct http_product.RepoHttpProductInterface
 
-	// self
-	warehouseUsecase WarehouseUsecaseInterface
+	// self interface
+	WarehouseUsecase WarehouseUsecaseInterface
 }
 
 type InitWarehouseUsecaseOptions struct {
@@ -27,6 +27,6 @@ func InitWarehouseUsecase(opts InitWarehouseUsecaseOptions) *WarehouseUsecase {
 		repoHttpShop:    opts.RepoHttpShop,
 		repoHttpProduct: opts.RepoHttpProduct,
 	}
-	u.warehouseUsecase = u
+	u.WarehouseUsecase = u
 	return u
 }

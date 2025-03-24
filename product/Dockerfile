@@ -3,6 +3,9 @@ WORKDIR /app
 COPY . .
 RUN ./bin/install_dependency.sh
 RUN make clean init && \
-    go build -buildvcs=false -o edot-product-be ./app
-EXPOSE 9300
-ENTRYPOINT ["./edot-product-be", "rest"]
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -buildvcs=false -o edot-product-be ./app
+
+FROM alpine:latest
+WORKDIR /app
+COPY --from=builder /app/edot-product-be .
+RUN chmod +x edot-product-be

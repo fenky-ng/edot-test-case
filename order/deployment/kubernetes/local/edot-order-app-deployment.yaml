@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edot-order-rest
+  labels:
+    app: edot-order-rest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edot-order-rest
+  template:
+    metadata:
+      labels:
+        app: edot-order-rest
+    spec:
+      containers:
+        - name: edot-order
+          image: edot-order:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9000
+          env:
+            - name: DATABASE_URL
+              value: "postgres://user:password@edot-order-postgres:5932/edot_order_db?sslmode=disable"
+            - name: USER_REST_SERVICE_ADDRESS
+              value: "http://edot-user-rest:9100"
+            - name: SHOP_REST_SERVICE_ADDRESS
+              value: "http://edot-shop-rest:9200"
+            - name: PRODUCT_REST_SERVICE_ADDRESS
+              value: "http://edot-product-rest:9300"
+            - name: WAREHOUSE_REST_SERVICE_ADDRESS
+              value: "http://edot-warehouse-rest:9400"
+            - name: "WAREHOUSE_REST_SERVICE_API_KEY"
+              value: "b8f3e7a9c2d645fba01e8c7d4f92ab3d"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edot-order-rest
+spec:
+  selector:
+    app: edot-order-rest
+  ports:
+    - protocol: TCP
+      port: 9500
+      targetPort: 9000
+      nodePort: 30500
+  type: NodePort

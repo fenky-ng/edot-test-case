@@ -65,9 +65,10 @@ type RestAPIGetStocksResponse struct {
 }
 
 type RestAPIDeductStocksRequest struct {
-	UserId  uuid.UUID         `json:"userId"`
-	OrderNo string            `json:"orderNo"`
-	Items   []DeductStockItem `json:"items"`
+	UserId  uuid.UUID                `json:"userId"`
+	OrderNo string                   `json:"orderNo"`
+	Items   []RestAPIDeductStockItem `json:"items"`
+	Release bool                     `json:"release"`
 }
 
 type RestAPIDeductStockItem struct {

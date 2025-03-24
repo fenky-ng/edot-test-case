@@ -16,7 +16,7 @@ var errorMessage = map[error]string{
 	ErrInvalidUpdateRequest:            "No update information provided. Please include at least one field to update.",
 	ErrInvalidWarehouseId:              "Invalid warehouse ID. Please provide a valid UUID.",
 	ErrInvalidProductId:                "Invalid product ID. Please provide a valid UUID.",
-	ErrMinOneProductIdQueryParam:       "At least one product_id must be provided in the query parameters.",
+	ErrMinOneProductIdQueryParam:       "At least one product ID must be provided in the query parameters.",
 	ErrMaxWarehousePerShop:             "Shop cannot have more warehouses. Maximum allowed limit reached.",
 	ErrWarehouseNotFound:               "Warehouse not found.",
 	ErrNotWarehouseOwner:               "You do not have permission to this warehouse.",
@@ -27,4 +27,5 @@ var errorMessage = map[error]string{
 	ErrStockLocked:                     "Stock changes are in progress. Please retry in a few seconds.",
 	ErrInsufficientStock:               "Insufficient stock available for this request.",
 	ErrWarehouseInactive:               "Warehouse is inactive.",
+	ErrInvalidQuantityDeduction:        "Deduction quantity must be greater than 0.",
 }

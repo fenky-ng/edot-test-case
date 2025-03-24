@@ -29,4 +29,5 @@ var errorHttpCodeMap = map[error]int{
 	ErrStockLocked:                     http.StatusConflict,
 	ErrInsufficientStock:               http.StatusBadRequest,
 	ErrWarehouseInactive:               http.StatusBadRequest,
+	ErrInvalidQuantityDeduction:        http.StatusBadRequest,
 }

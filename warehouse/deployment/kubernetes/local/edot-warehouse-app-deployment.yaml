@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: edot-warehouse-app
+  name: edot-warehouse-rest
   labels:
-    app: edot-warehouse-app
+    app: edot-warehouse-rest
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: edot-warehouse-app
+      app: edot-warehouse-rest
   template:
     metadata:
       labels:
-        app: edot-warehouse-app
+        app: edot-warehouse-rest
     spec:
       containers:
         - name: edot-warehouse
@@ -24,21 +24,21 @@ spec:
             - name: DATABASE_URL
               value: "postgres://user:password@edot-warehouse-postgres:5832/edot_warehouse_db?sslmode=disable"
             - name: USER_REST_SERVICE_ADDRESS
-              value: "http://edot-user-app:9100"
+              value: "http://edot-user-rest:9100"
             - name: SHOP_REST_SERVICE_ADDRESS
-              value: "http://edot-shop-app:9200"
+              value: "http://edot-shop-rest:9200"
             - name: PRODUCT_REST_SERVICE_ADDRESS
-              value: "http://edot-product-app:9300"
-            - name: API_KEY_EXT_ORDER
+              value: "http://edot-product-rest:9300"
+            - name: REST_API_KEY_EXT_ORDER
               value: "b8f3e7a9c2d645fba01e8c7d4f92ab3d"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: edot-warehouse-app
+  name: edot-warehouse-rest
 spec:
   selector:
-    app: edot-warehouse-app
+    app: edot-warehouse-rest
   ports:
     - protocol: TCP
       port: 9400

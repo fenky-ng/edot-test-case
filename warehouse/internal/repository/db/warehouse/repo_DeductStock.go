@@ -20,14 +20,22 @@ func (r *RepoDbWarehouse) DeductStock(ctx context.Context, input model.DeductSto
 		mode = "NOWAIT"
 	}
 
+	fu := ""
+	if input.Release {
+		fu = fmt.Sprintf("FOR UPDATE %s", mode)
+	}
+
 	var stockId uuid.UUID
 
-	err = r.sql.From(constant.TableStock).
+	lockStmt := r.sql.From(constant.TableStock).
 		Select("id").To(&stockId).
 		Where("warehouse_id = ?", input.WarehouseId).
-		Where("product_id = ?", input.ProductId).
-		Where(fmt.Sprintf("stock >= ? FOR UPDATE %s", mode), input.Quantity).
-		QueryRowAndClose(ctx, r.UseTx(ctx))
+		Where(fmt.Sprintf("product_id = ? %s", fu), input.ProductId)
+	if !input.Release {
+		lockStmt.Where(fmt.Sprintf("stock >= ? FOR UPDATE %s", mode), input.Quantity)
+	}
+
+	err = lockStmt.QueryRowAndClose(ctx, r.UseTx(ctx))
 
 	if err != nil {
 		appErr := in_err.ErrDeductStock
@@ -41,15 +49,22 @@ func (r *RepoDbWarehouse) DeductStock(ctx context.Context, input model.DeductSto
 	}
 
 	// UPDATE
-	stmt := r.sql.Update(constant.TableStock).
-		SetExpr("stock", "stock-?", input.Quantity).
+	stockOperator := "-"
+	if input.Release {
+		stockOperator = "+"
+	}
+
+	updateStmt := r.sql.Update(constant.TableStock).
+		SetExpr("stock", fmt.Sprintf("stock %s ?", stockOperator), input.Quantity).
 		Set("updated_at", input.RequestedAt).
 		Set("updated_by", input.RequestedBy).
 		Where("warehouse_id = ?", input.WarehouseId).
-		Where("product_id = ?", input.ProductId).
-		Where("stock >= ?", input.Quantity)
+		Where("product_id = ?", input.ProductId)
+	if !input.Release {
+		updateStmt.Where("stock >= ?", input.Quantity)
+	}
 
-	_, err = stmt.ExecAndClose(ctx, r.UseTx(ctx))
+	_, err = updateStmt.ExecAndClose(ctx, r.UseTx(ctx))
 	if err != nil {
 		err = errors.Join(in_err.ErrDeductStock, err)
 		return output, err

@@ -1,23 +1,23 @@
 # edot-test-case
 
 Apps:
-- edot-user-app
+- edot-user-rest
     - address:
         - Docker -> :9100
         - Kubernetes -> :30100
-- edot-shop-app
+- edot-shop-rest
     - address:
         - Docker -> :9200
         - Kubernetes -> :30200
-- edot-product-app
+- edot-product-rest
     - address:
         - Docker -> :9300
         - Kubernetes -> :30300
-- edot-warehouse-app
+- edot-warehouse-rest
     - address:
         - Docker -> :9400
         - Kubernetes -> :30400
-- edot-order-app
+- edot-order-rest
     - address:
         - Docker -> :9500
         - Kubernetes -> :30500

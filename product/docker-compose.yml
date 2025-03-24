@@ -1,21 +1,27 @@
 services:
-  app:
-    build: .
+  edot-product-rest:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: edot-product:latest
+    command: ["/app/edot-product-be", "rest"]
     ports:
       - "9300:9000"
+    expose:
+      - 9300
     depends_on:
-      db:
+      edot-product-postgres:
         condition: service_healthy
     networks:
       edot-network:
         aliases:
-          - edot-product-app
+          - edot-product-rest
     environment:
       DATABASE_URL: "postgres://user:password@edot-product-postgres:5432/edot_product_db?sslmode=disable"
-      USER_REST_SERVICE_ADDRESS: "http://edot-user-app:9000"
-      SHOP_REST_SERVICE_ADDRESS: "http://edot-shop-app:9000"
-      WAREHOUSE_REST_SERVICE_ADDRESS: "http://edot-warehouse-app:9000"
-  db:
+      USER_REST_SERVICE_ADDRESS: "http://edot-user-rest:9000"
+      SHOP_REST_SERVICE_ADDRESS: "http://edot-shop-rest:9000"
+      WAREHOUSE_REST_SERVICE_ADDRESS: "http://edot-warehouse-rest:9000"
+  edot-product-postgres:
     image: postgres:15
     environment:
       POSTGRES_USER: user
@@ -23,23 +29,23 @@ services:
       POSTGRES_DB: edot_product_db
     ports:
       - 5732:5432
+    expose:
+      - 5732
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready" ]
       interval: 10s
       timeout: 5s
       retries: 3
-    expose:
-      - 5732
     volumes:
       - edot-product-db:/var/lib/postgresql/data
     networks:
       edot-network:
         aliases:
           - edot-product-postgres
-  migrate:
+  edot-product-migrate:
     image: migrate/migrate
     depends_on:
-      db:
+      edot-product-postgres:
         condition: service_healthy
     networks:
       - edot-network

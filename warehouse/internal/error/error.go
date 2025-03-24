@@ -5,7 +5,7 @@ import "errors"
 var (
 	ErrMissingAuthToken                = errors.New("missing auth token")
 	ErrInvalidAuthTokenFormat          = errors.New("invalid auth token format")
-	ErrGetUserProfile                  = errors.New("error occured when getting user profile")
+	ErrGetUserProfile                  = errors.New("error occurred when getting user profile")
 	ErrNoJWT                           = errors.New("no jwt")
 	ErrNoUserId                        = errors.New("no user id")
 	ErrInvalidUserId                   = errors.New("invalid user id")
@@ -29,10 +29,11 @@ var (
 	ErrStockLocked                     = errors.New("stock is locked")
 	ErrInsufficientStock               = errors.New("insufficient stock")
 	ErrWarehouseInactive               = errors.New("warehouse is inactive")
+	ErrInvalidQuantityDeduction        = errors.New("invalid quantity for deduction")
 
 	// system error
-	ErrGetMyShop       = errors.New("error occured when getting my shop")
-	ErrGetProductById  = errors.New("error occured when getting product by id")
+	ErrGetMyShop       = errors.New("error occurred when getting my shop")
+	ErrGetProductById  = errors.New("error occurred when getting product by id")
 	ErrInsertWarehouse = errors.New("error occurred when inserting warehouse")
 	ErrUpdateWarehouse = errors.New("error occurred when updating warehouse")
 	ErrGetWarehouses   = errors.New("error occurred when getting warehouses")

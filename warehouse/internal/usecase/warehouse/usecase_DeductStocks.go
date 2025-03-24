@@ -15,7 +15,7 @@ import (
 )
 
 func (u *WarehouseUsecase) DeductStocks(ctx context.Context, input model.DeductStocksInput) (output model.DeductStocksOutput, err error) {
-	err = u.warehouseUsecase.ValidateDeductStocks(ctx, input)
+	err = u.WarehouseUsecase.ValidateDeductStocks(ctx, input)
 	if err != nil {
 		return output, err
 	}
@@ -34,6 +34,7 @@ func (u *WarehouseUsecase) DeductStocks(ctx context.Context, input model.DeductS
 			WarehouseId: stock.WarehouseId,
 			ProductId:   stock.ProductId,
 			Quantity:    stock.Quantity,
+			Release:     input.Release,
 			RequestedAt: time.Now().UnixMilli(),
 			RequestedBy: input.UserId.String(),
 			NoWait:      true,

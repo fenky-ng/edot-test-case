@@ -1,15 +1,39 @@
 package rest
 
 import (
+	"errors"
+	"strings"
+
+	in_err "github.com/fenky-ng/edot-test-case/product/internal/error"
 	"github.com/fenky-ng/edot-test-case/product/internal/model"
 	gin_res "github.com/fenky-ng/edot-test-case/product/internal/utility/gin/response"
+	string_util "github.com/fenky-ng/edot-test-case/product/internal/utility/string"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (h *RestAPI) GetProducts(c *gin.Context) {
 	ctx := c.Request.Context()
 
-	out, err := h.usecase.ProductUsecase.GetProducts(ctx, model.GetProductsInput{})
+	var (
+		ids []uuid.UUID
+		err error
+	)
+
+	paramIds := c.Query("ids")
+	if paramIds != "" {
+		strIds := strings.Split(paramIds, ",")
+		ids, err = string_util.ParseStringArrToUuidArr(strIds)
+		if err != nil {
+			err = errors.Join(in_err.ErrInvalidProductId, err)
+			gin_res.ReturnError(c, err)
+			return
+		}
+	}
+
+	out, err := h.usecase.ProductUsecase.GetProducts(ctx, model.GetProductsInput{
+		Ids: ids,
+	})
 	if err != nil {
 		gin_res.ReturnError(c, err)
 		return

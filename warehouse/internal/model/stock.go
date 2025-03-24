@@ -47,6 +47,7 @@ type DeductStocksInput struct {
 	UserId  uuid.UUID
 	OrderNo string
 	Items   []DeductStockItem
+	Release bool
 }
 
 type DeductStocksOutput struct {
@@ -88,6 +89,7 @@ type DeductStockInput struct {
 	WarehouseId uuid.UUID
 	ProductId   uuid.UUID
 	Quantity    int64
+	Release     bool
 	RequestedAt int64
 	RequestedBy string
 	NoWait      bool

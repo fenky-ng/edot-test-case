@@ -5,7 +5,7 @@ import "errors"
 var (
 	ErrMissingAuthToken       = errors.New("missing auth token")
 	ErrInvalidAuthTokenFormat = errors.New("invalid auth token format")
-	ErrGetUserProfile         = errors.New("error occured when getting user profile")
+	ErrGetUserProfile         = errors.New("error occurred when getting user profile")
 	ErrNoJWT                  = errors.New("no jwt")
 	ErrNoUserId               = errors.New("no user id")
 	ErrInvalidUserId          = errors.New("invalid user id")
@@ -18,8 +18,8 @@ var (
 	ErrProductNotFound        = errors.New("product not found")
 
 	// system error
-	ErrGetMyShop     = errors.New("error occured when getting my shop")
-	ErrGetShops      = errors.New("error occured when getting shops")
+	ErrGetMyShop     = errors.New("error occurred when getting my shop")
+	ErrGetShops      = errors.New("error occurred when getting shops")
 	ErrGetStocks     = errors.New("error occurred when getting stocks")
 	ErrGetProducts   = errors.New("error occurred when getting products")
 	ErrGetProduct    = errors.New("error occurred when getting product")

@@ -55,6 +55,7 @@ type GetMyProductsOutput struct {
 }
 
 type GetProductsInput struct {
+	Ids    []uuid.UUID
 	ShopId uuid.UUID
 }
 

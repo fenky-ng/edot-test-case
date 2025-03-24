@@ -105,7 +105,7 @@ func Test_RestAPI_GetProfile(t *testing.T) {
 			},
 		},
 		{
-			name:             "should return response internal server error if unmapped error occured in ProfileUsecase.GetProfile",
+			name:             "should return response internal server error if unmapped error occurred in ProfileUsecase.GetProfile",
 			headerAuth:       constant.AuthBearer + " " + jwt,
 			expectedHttpCode: http.StatusInternalServerError,
 			expectedResponseBody: model.RestAPIErrorResponse{
