@@ -1,0 +1,687 @@
+{
+	"info": {
+		"_postman_id": "0f4660d8-78e6-438a-827f-ba708692fa3a",
+		"name": "Fenky's eDOT Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33637423"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"eDOT P\",\n    \"phoneOrEmail\": \"081234567890\",\n    \"password\": \"000000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-user-rest-url}}/api/v1/users/register",
+							"host": [
+								"{{edot-user-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phoneOrEmail\": \"081234567890\",\n    \"password\": \"000000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-user-rest-url}}/api/v1/users/login",
+							"host": [
+								"{{edot-user-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTczNTg1NDYsImlhdCI6MTc0Mjc5MjU1ODU0Niwic3ViIjoiOWQ2YjdlNWYtNjE2Ni00MjBkLWJhZTgtOTI3NTdhZmRiZWNkIn0.35gIGYyIFJfYND-JzayR4xfZIcMdWiTs_nlQdRqmyMs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-user-rest-url}}/api/v1/users/me",
+							"host": [
+								"{{edot-user-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shop",
+			"item": [
+				{
+					"name": "Create Shop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTczNTg1NDYsImlhdCI6MTc0Mjc5MjU1ODU0Niwic3ViIjoiOWQ2YjdlNWYtNjE2Ni00MjBkLWJhZTgtOTI3NTdhZmRiZWNkIn0.35gIGYyIFJfYND-JzayR4xfZIcMdWiTs_nlQdRqmyMs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Shop 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-shop-rest-url}}/api/v1/shops",
+							"host": [
+								"{{edot-shop-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"shops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Shop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTczNTg1NDYsImlhdCI6MTc0Mjc5MjU1ODU0Niwic3ViIjoiOWQ2YjdlNWYtNjE2Ni00MjBkLWJhZTgtOTI3NTdhZmRiZWNkIn0.35gIGYyIFJfYND-JzayR4xfZIcMdWiTs_nlQdRqmyMs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-shop-rest-url}}/api/v1/shops/me",
+							"host": [
+								"{{edot-shop-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"shops",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shops",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-shop-rest-url}}/api/v1/shops",
+							"host": [
+								"{{edot-shop-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"shops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shop By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMxMDIyNDIwOTksImlhdCI6MTc0MjQ5NzQ0MjA5OSwic3ViIjoiZTFkNDgwNjQtYmE1YS00YmJlLThlM2UtZDBmYjhlZjU1MzgzIn0.js0fB8z4kPBshfdD5Bv82G3peacP1tI3Nb5kSIX1abk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-shop-rest-url}}/api/v1/shops/01276b0f-51ea-4396-b41e-f5df9a7c91d5",
+							"host": [
+								"{{edot-shop-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"shops",
+								"01276b0f-51ea-4396-b41e-f5df9a7c91d5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTczNTg1NDYsImlhdCI6MTc0Mjc5MjU1ODU0Niwic3ViIjoiOWQ2YjdlNWYtNjE2Ni00MjBkLWJhZTgtOTI3NTdhZmRiZWNkIn0.35gIGYyIFJfYND-JzayR4xfZIcMdWiTs_nlQdRqmyMs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Product 1\",\n    \"description\": \"test create product 1\",\n    \"price\": 11111,\n    \"status\": \"ACTIVE\"   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-product-rest-url}}/api/v1/products",
+							"host": [
+								"{{edot-product-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTczNTg1NDYsImlhdCI6MTc0Mjc5MjU1ODU0Niwic3ViIjoiOWQ2YjdlNWYtNjE2Ni00MjBkLWJhZTgtOTI3NTdhZmRiZWNkIn0.35gIGYyIFJfYND-JzayR4xfZIcMdWiTs_nlQdRqmyMs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-product-rest-url}}/api/v1/products/me",
+							"host": [
+								"{{edot-product-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-product-rest-url}}/api/v1/products",
+							"host": [
+								"{{edot-product-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-product-rest-url}}/api/v1/products/a153d82f-6aee-4b51-a85c-91dbd508be6c",
+							"host": [
+								"{{edot-product-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"a153d82f-6aee-4b51-a85c-91dbd508be6c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Warehouse",
+			"item": [
+				{
+					"name": "Create Warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTczNTg1NDYsImlhdCI6MTc0Mjc5MjU1ODU0Niwic3ViIjoiOWQ2YjdlNWYtNjE2Ni00MjBkLWJhZTgtOTI3NTdhZmRiZWNkIn0.35gIGYyIFJfYND-JzayR4xfZIcMdWiTs_nlQdRqmyMs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Warehouse S1W3\",\n    \"status\": \"ACTIVE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-warehouse-rest-url}}/api/v1/warehouses",
+							"host": [
+								"{{edot-warehouse-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"warehouses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTczNTg1NDYsImlhdCI6MTc0Mjc5MjU1ODU0Niwic3ViIjoiOWQ2YjdlNWYtNjE2Ni00MjBkLWJhZTgtOTI3NTdhZmRiZWNkIn0.35gIGYyIFJfYND-JzayR4xfZIcMdWiTs_nlQdRqmyMs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"INACTIVE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-warehouse-rest-url}}/api/v1/warehouses/2b369c05-5b10-4957-afbf-d49aae51ee45",
+							"host": [
+								"{{edot-warehouse-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"warehouses",
+								"2b369c05-5b10-4957-afbf-d49aae51ee45"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Warehouses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTczNTg1NDYsImlhdCI6MTc0Mjc5MjU1ODU0Niwic3ViIjoiOWQ2YjdlNWYtNjE2Ni00MjBkLWJhZTgtOTI3NTdhZmRiZWNkIn0.35gIGYyIFJfYND-JzayR4xfZIcMdWiTs_nlQdRqmyMs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-warehouse-rest-url}}/api/v1/warehouses/me",
+							"host": [
+								"{{edot-warehouse-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"warehouses",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create or Update Stock - Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTczNTg1NDYsImlhdCI6MTc0Mjc5MjU1ODU0Niwic3ViIjoiOWQ2YjdlNWYtNjE2Ni00MjBkLWJhZTgtOTI3NTdhZmRiZWNkIn0.35gIGYyIFJfYND-JzayR4xfZIcMdWiTs_nlQdRqmyMs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"warehouseId\": \"ddb2c59d-1e79-4e88-bef1-813daf100dbc\",\n    \"productId\": \"c2e36ef6-0005-481f-a7ab-b8109778df3f\",\n    \"stock\": 22\n    // if transfer stock between warehouses, set destination warehouse id in `toWarehouseId`\n    //, \"toWarehouseId\": \"9a55b417-25aa-4bf7-b14b-b091273aefde\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-warehouse-rest-url}}/api/v1/warehouses/stocks",
+							"host": [
+								"{{edot-warehouse-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"warehouses",
+								"stocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Stocks",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-warehouse-rest-url}}/api/v1/warehouses/stocks?productIds=ab26481f-5451-4b46-ad1a-a27eddb67b54",
+							"host": [
+								"{{edot-warehouse-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"warehouses",
+								"stocks"
+							],
+							"query": [
+								{
+									"key": "productIds",
+									"value": "ab26481f-5451-4b46-ad1a-a27eddb67b54"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deduct Stocks",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "b8f3e7a9c2d645fba01e8c7d4f92ab3d",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-Key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"af47ca20-5ebd-4935-bab3-db283a94d5d3\",\n    \"orderNo\": \"ORD/20250323183000\",\n    \"items\": [\n        {\n            \"productId\": \"ab26481f-5451-4b46-ad1a-a27eddb67b54\",\n            \"warehouseId\": \"16cf8e81-6481-461d-a2a2-5aa1de94345a\",\n            \"quantity\": 6\n        }\n    ]\n    // sending request with release true will revert the stock deduction\n    //, \"release\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-warehouse-rest-url}}/api/v1/warehouses/stocks/deduct",
+							"host": [
+								"{{edot-warehouse-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"warehouses",
+								"stocks",
+								"deduct"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTgzMzE2MzUsImlhdCI6MTc0Mjc5MzUzMTYzNSwic3ViIjoiYWNlZDlmOTMtOWExMy00ZTlhLThlZTMtNDE0NGY1MzA3NDg2In0.9Uz-9W-iXz29N5Gy5cH5n1RXY_JjAEUHWXY75xsZe4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\": [\n        {\n            \"productId\": \"c2e36ef6-0005-481f-a7ab-b8109778df3f\",\n            \"warehouseId\": \"ddb2c59d-1e79-4e88-bef1-813daf100dbc\",\n            \"quantity\": 1\n        },\n        {\n            \"productId\": \"a153d82f-6aee-4b51-a85c-91dbd508be6c\",\n            \"warehouseId\": \"94fb9646-f73c-4cca-a566-83c32bae6414\",\n            \"quantity\": 2\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-order-rest-url}}/api/v1/orders",
+							"host": [
+								"{{edot-order-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzOTgzMzE2MzUsImlhdCI6MTc0Mjc5MzUzMTYzNSwic3ViIjoiYWNlZDlmOTMtOWExMy00ZTlhLThlZTMtNDE0NGY1MzA3NDg2In0.9Uz-9W-iXz29N5Gy5cH5n1RXY_JjAEUHWXY75xsZe4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{edot-order-rest-url}}/api/v1/orders/me",
+							"host": [
+								"{{edot-order-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Payment",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderNo\": \"ORD/20250324051958/c33da17a-e606-4ddb-a9ee-7dafa3c20c3e\",\n    \"paymentRefNo\": \"PAY/20250324034320/1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{edot-order-rest-url}}/api/v1/orders/payment-confirmation",
+							"host": [
+								"{{edot-order-rest-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"payment-confirmation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

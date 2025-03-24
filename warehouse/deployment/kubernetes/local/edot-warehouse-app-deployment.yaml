@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
         - name: edot-warehouse
-          image: edot-warehouse:latest
-          imagePullPolicy: Never
+          image: fenkygouw/edot-warehouse:latest
           ports:
             - containerPort: 9000
           env:

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: edot-user
-          image: your-registry/edot-user:latest
+          image: fenkygouw/edot-user:latest
           ports:
             - containerPort: 9000
           env:

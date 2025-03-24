@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
         - name: edot-order
-          image: edot-order:latest
-          imagePullPolicy: Never
+          image: fenkygouw/edot-order:latest
           ports:
             - containerPort: 9000
           env:

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: edot-product
-          image: your-registry/edot-product:latest
+          image: fenkygouw/edot-product:latest
           ports:
             - containerPort: 9000
           env:

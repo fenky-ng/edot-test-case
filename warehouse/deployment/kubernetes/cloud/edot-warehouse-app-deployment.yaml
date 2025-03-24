@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: edot-warehouse
-          image: your-registry/edot-warehouse:latest
+          image: fenkygouw/edot-warehouse:latest
           ports:
             - containerPort: 9000
           env:
