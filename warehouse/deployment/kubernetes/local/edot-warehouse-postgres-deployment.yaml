@@ -24,7 +24,7 @@ spec:
         app: edot-warehouse-postgres
     spec:
       containers:
-        - name: postgres
+        - name: edot-warehouse-postgres
           image: postgres:15
           env:
             - name: POSTGRES_USER

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: edot-product-rest
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: edot-product-rest
@@ -15,16 +15,13 @@ spec:
         app: edot-product-rest
     spec:
       containers:
-        - name: edot-product
+        - name: edot-product-rest
           image: fenkygouw/edot-product:latest
           ports:
             - containerPort: 9000
           env:
             - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: edot-product-secret
-                  key: DATABASE_URL
+              value: "postgres://user:password@edot-product-postgres:5732/edot_product_db?sslmode=disable"
             - name: USER_REST_SERVICE_ADDRESS
               value: "http://edot-user-rest:9100"
             - name: SHOP_REST_SERVICE_ADDRESS
@@ -43,4 +40,5 @@ spec:
     - protocol: TCP
       port: 9300
       targetPort: 9000
-  type: LoadBalancer
+      nodePort: 30300
+  type: NodePort

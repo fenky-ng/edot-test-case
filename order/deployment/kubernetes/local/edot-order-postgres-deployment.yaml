@@ -24,7 +24,7 @@ spec:
         app: edot-order-postgres
     spec:
       containers:
-        - name: postgres
+        - name: edot-order-postgres
           image: postgres:15
           env:
             - name: POSTGRES_USER

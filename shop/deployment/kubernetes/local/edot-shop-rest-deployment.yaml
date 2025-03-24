@@ -15,7 +15,7 @@ spec:
         app: edot-shop-rest
     spec:
       containers:
-        - name: edot-shop
+        - name: edot-shop-rest
           image: fenkygouw/edot-shop:latest
           ports:
             - containerPort: 9000

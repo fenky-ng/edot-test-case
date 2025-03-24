@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edot-user-rest
+  labels:
+    app: edot-user-rest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edot-user-rest
+  template:
+    metadata:
+      labels:
+        app: edot-user-rest
+    spec:
+      containers:
+        - name: edot-user-rest
+          image: fenkygouw/edot-user:latest
+          ports:
+            - containerPort: 9000
+          env:
+            - name: DATABASE_URL
+              value: "postgres://user:password@edot-user-postgres:5532/edot_user_db?sslmode=disable"
+            - name: JWT_SECRET
+              value: "u8EqBH/goITDyY5acas99221Ot/m+wbiGa5DpiiW878="
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edot-user-rest
+spec:
+  selector:
+    app: edot-user-rest
+  ports:
+    - protocol: TCP
+      port: 9100
+      targetPort: 9000
+      nodePort: 30100
+  type: NodePort

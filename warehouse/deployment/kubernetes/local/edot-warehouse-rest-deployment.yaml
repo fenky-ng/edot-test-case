@@ -5,7 +5,7 @@ metadata:
   labels:
     app: edot-warehouse-rest
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: edot-warehouse-rest
@@ -15,16 +15,13 @@ spec:
         app: edot-warehouse-rest
     spec:
       containers:
-        - name: edot-warehouse
+        - name: edot-warehouse-rest
           image: fenkygouw/edot-warehouse:latest
           ports:
             - containerPort: 9000
           env:
             - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: edot-warehouse-secret
-                  key: DATABASE_URL
+              value: "postgres://user:password@edot-warehouse-postgres:5832/edot_warehouse_db?sslmode=disable"
             - name: USER_REST_SERVICE_ADDRESS
               value: "http://edot-user-rest:9100"
             - name: SHOP_REST_SERVICE_ADDRESS
@@ -32,10 +29,7 @@ spec:
             - name: PRODUCT_REST_SERVICE_ADDRESS
               value: "http://edot-product-rest:9300"
             - name: REST_API_KEY_EXT_ORDER
-              valueFrom:
-                secretKeyRef:
-                  name: edot-warehouse-secret
-                  key: REST_API_KEY_EXT_ORDER
+              value: "b8f3e7a9c2d645fba01e8c7d4f92ab3d"
 ---
 apiVersion: v1
 kind: Service
@@ -48,4 +42,5 @@ spec:
     - protocol: TCP
       port: 9400
       targetPort: 9000
-  type: LoadBalancer
+      nodePort: 30400
+  type: NodePort
